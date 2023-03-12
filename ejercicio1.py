@@ -130,7 +130,25 @@ class Polinomio(object):
                 pol2 = pol2.sig
             pol1 = pol1.sig
         return paux
-
+    
+    def dividir(polinomio1, polinomio2):
+        """Divide dos polinomios y devuelve el resultado"""
+        paux = Polinomio()
+        pol1 = polinomio1.termino_mayor
+        while (pol1 is not None):
+            pol2 = polinomio2.termino_mayor
+            while (pol2 is not None):
+                termino = pol1.info.termino - pol2.info.termino
+                valor = pol1.info.valor / pol2.info.valor
+                if (Polinomio.obtener_valor(paux, termino) != 0):
+                   valor += Polinomio.obtener_valor(paux, termino)
+                   Polinomio.modificar_termino(paux, termino, valor)
+                else:
+                    Polinomio.agregar_termino(paux, termino, valor)
+                pol2 = pol2.sig
+            pol1 = pol1.sig
+        return paux
+    
 
 p1 = Polinomio()
 p1.agregar_termino(3, 7) # Agrega el término 7x^3
@@ -160,4 +178,6 @@ print(p1.mostrar())
 print(p1.existe_termino(5)) # Devuelve True si existe el término x^5 en el polinomio p2
 print(p2.existe_termino(3)) # Devuelve False si no existe el término x^3 en el polinomio p2
 
+p6 = Polinomio.dividir(p1, p2) # Divide los polinomios p1 y p2
+print(p6.mostrar())
 
